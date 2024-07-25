@@ -17,19 +17,19 @@ const Navbar = ({ user }: { user: User | null }) => {
   };
 
   return (
-    <nav className="flex justify-between max-w-[1200px] mx-auto p-5">
+    <nav className="flex justify-between h-20 items-center mb-[72px] bg-[#222222] rounded-2xl px-12 mt-8">
       <Image
-        src="/static/images/vercel.svg"
+        src="/static/images/logo.png"
         alt="logo"
-        width={64}
-        height={64}
+        width={140}
+        height={48}
       />
-      <ul className="flex gap-4">
+      <ul className="flex gap-4 text-lg">
         <li>
           <Link href="/">Home</Link>
         </li>
         {user ? (
-          <li onClick={handleSignOut}>Sign Out</li>
+          <li className="cursor-pointer" onClick={handleSignOut}>Sign Out</li>
         ) : (
           <li>
             <Link href="/login">Login</Link>

@@ -1,7 +1,7 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 import Navbar from "./components/Navbar";
+import MainPage from "./components/MainPage";
 
 export default async function Home() {
   const supabase = createServerComponentClient({ cookies });
@@ -9,11 +9,12 @@ export default async function Home() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  // if (!user) redirect("/login");
   return (
-    <div>
-      <Navbar user={user} />
-      <h1>Home</h1>
+    <div className="w-full flex justify-center">
+      <div className="w-full max-w-[1289px] mx-8 flex flex-col justify-center">
+        <Navbar user={user} />
+        <MainPage user={user} />
+      </div>
     </div>
   );
 }
