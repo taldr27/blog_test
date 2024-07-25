@@ -24,10 +24,10 @@ export default function AuthButton() {
   };
 
   return (
-    <div className="min-h-screen flex justify-center items-center sm:items-start">
+    <div className="h-[calc(100vh-184px)] flex justify-center items-center">
       {error && <p className="text-red-500">{error}</p>}
-      <div className="sm:h-96 sm:w-96 sm:absolute sm:right-32 sm:bottom-60">
-        <div className="flex flex-col text-center items-center sm:items-start sm:text-left">
+      <div className="h-96 w-96">
+        <div className="flex flex-col text-center items-center">
           <h1 className="font-bold text-5xl leading-[60px]">
             Welcome to Blogsphere
           </h1>
