@@ -8,7 +8,7 @@ export default function YourPosts({
   return (
     <>
       {filteredPosts ? (
-        <PostsComponent posts={filteredPosts} />
+        <PostsComponent posts={filteredPosts} isSmall />
       ) : (
         <span>You have no posts...</span>
       )}

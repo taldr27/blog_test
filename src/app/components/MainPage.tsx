@@ -3,10 +3,15 @@ import { cookies } from "next/headers";
 import PostsComponent from "./PostsComponent";
 import YourPosts from "./YourPosts";
 import Separator from "./Separator";
+import InputBox from "./InputBox";
+import AddNewPost from "./AddNewPost";
 
 export default async function MainPage({ user }: any) {
   const supabase = createServerComponentClient({ cookies });
-  const { data: posts } = await supabase.from("posts").select("*");
+  const { data: posts } = await supabase
+    .from("posts")
+    .select("*")
+    .order("created_at", { ascending: false });
 
   // TODO: I think I can filter posts to not repeat with the general posts section.
   let userPosts = [];
@@ -14,7 +19,9 @@ export default async function MainPage({ user }: any) {
     const { data: userPostsData } = await supabase
       .from("posts")
       .select("*")
-      .eq("profile_id", user.id);
+      .eq("profile_id", user.id)
+      .order("created_at", { ascending: false })
+      .limit(4);
     userPosts = userPostsData || [];
   }
 
@@ -25,9 +32,7 @@ export default async function MainPage({ user }: any) {
       <div id="your-posts" className="mt-20">
         <Separator title="Your Posts" />
         {user ? (
-          <div className="w-full">
-            <YourPosts filteredPosts={userPosts} />
-          </div>
+          <AddNewPost userPosts={userPosts} />
         ) : (
           <span className="block text-lg -mt-8">
             Log In to see your posts or add a new one...
