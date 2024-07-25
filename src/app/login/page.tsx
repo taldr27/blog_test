@@ -9,11 +9,24 @@ export default function AuthButton() {
   const supabase = createClientComponentClient();
   const router = useRouter();
 
+  // https://supabase.com/docs/guides/auth/redirect-urls
+  const getURL = () => {
+    let url =
+      process?.env?.NEXT_PUBLIC_SITE_URL ??
+      process?.env?.NEXT_PUBLIC_VERCEL_URL ??
+      "http://localhost:3000/";
+    url = url.startsWith("http") ? url : `https://${url}`;
+    url = url.endsWith("/") ? url : `${url}/`;
+    return url;
+  };
+
   const handleSignInWithGitHub = async () => {
     try {
       await supabase.auth.signInWithOAuth({
         provider: "github",
-        options: { redirectTo: "http://localhost:3000/auth/callback" },
+        options: {
+          redirectTo: getURL(),
+        },
       });
       router.refresh();
     } catch (error) {
