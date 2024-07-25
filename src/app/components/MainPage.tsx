@@ -8,7 +8,6 @@ export default async function MainPage({ user }: any) {
   const supabase = createServerComponentClient({ cookies });
   const { data: posts } = await supabase.from("posts").select("*");
 
-
   // TODO: I think I can filter posts to not repeat with the general posts section.
   let userPosts = [];
   if (user) {
@@ -23,7 +22,7 @@ export default async function MainPage({ user }: any) {
     <div className="max-w-[1200px] w-full self-center">
       <Separator title="Available Posts" />
       <PostsComponent posts={posts} />
-      <div className="mt-16">
+      <div id="your-posts" className="mt-20">
         <Separator title="Your Posts" />
         {user ? (
           <div className="w-full">
