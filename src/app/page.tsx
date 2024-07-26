@@ -13,7 +13,8 @@ export default async function Home() {
   const { data: postsData } = await supabase
     .from("posts")
     .select("*, profile:profiles(*)")
-    .order("created_at", { ascending: false });
+    .order("created_at", { ascending: false })
+    .limit(9);
   const posts: PostWithProfile[] = postsData as PostWithProfile[];
 
   // TODO: I think I can filter posts to not repeat with the general posts section.
