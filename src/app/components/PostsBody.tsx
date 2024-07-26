@@ -3,16 +3,11 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Post, PostWithProfile } from "../types/types";
+import { DateConverter } from "../utils/DateConverter";
 
 export default function PostsBody({ post }: { post: PostWithProfile }) {
   const router = useRouter();
-  const date = new Date(post.created_at).toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-    hour: "numeric",
-    minute: "numeric",
-  });
+  const date = DateConverter(post.created_at);
 
   const isContentTooLong = post.content.length > 70;
   const contentToShow = isContentTooLong
