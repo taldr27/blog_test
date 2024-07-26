@@ -17,6 +17,8 @@ export default function AuthButton() {
       "http://localhost:3000/";
     url = url.startsWith("http") ? url : `https://${url}`;
     url = url.endsWith("/") ? url : `${url}/`;
+
+    console.log("Redirect URL:", url);
     return url;
   };
 
