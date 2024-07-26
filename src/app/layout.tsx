@@ -23,7 +23,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${dm_sans.className} antialiased w-full max-w-[1289px] mx-auto px-8 relative h-[3000px]`}
+        className={`${dm_sans.className} antialiased w-full max-w-[1289px] mx-auto px-8 relative mb-28`}
       >
         <Navbar user={user} />
         {children}

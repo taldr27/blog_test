@@ -11,3 +11,7 @@ export type PostWithProfile = Post & {
 export type CommentWithProfile = Comment & {
   profile: Profile;
 };
+
+export type PostWithComments = PostWithProfile & {
+  comments: CommentWithProfile[];
+};

@@ -21,7 +21,7 @@ export default function MainPage({
         {user ? (
           <AddNewPost userPosts={userPosts} />
         ) : (
-          <span className="block text-lg -mt-8">
+          <span className="block text-lg -mt-4">
             Log In to see your posts or add a new one...
           </span>
         )}

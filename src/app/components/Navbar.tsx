@@ -56,7 +56,7 @@ const Navbar = ({ user }: { user: User | null }) => {
         {user ? (
           <li>
             <button
-              className="cursor-pointer bg-red-500 rounded-3xl py-2 px-4 hover:bg-red-600"
+              className="cursor-pointer bg-[#007aff] rounded-3xl py-2 px-4 hover:bg-[#4294ec]"
               onClick={handleSignOut}
             >
               Sign Out
@@ -64,9 +64,9 @@ const Navbar = ({ user }: { user: User | null }) => {
           </li>
         ) : (
           <li
-            className={`hover:text-gray-300 ${
-              pathname === "/login" ? "underline" : ""
-            }`}
+            className={
+              "cursor-pointer bg-[#007aff] rounded-3xl py-2 px-4 hover:bg-[#4294ec]"
+            }
           >
             <Link href="/login">Login</Link>
           </li>
