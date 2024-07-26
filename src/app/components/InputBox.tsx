@@ -27,8 +27,10 @@ export default function InputBox({
           ref.current?.reset();
           setImage(null);
         } catch (error) {
-          console.log(error, "xdxdxd");
-          setError("Error adding post");
+          setError((error as Error).message);
+          setTimeout(() => {
+            setError(null);
+          }, 3000);
         }
       }}
       className="bg-[#121212] p-4 rounded-md w-full max-w-lg mx-auto min-h-[411px] flex flex-col space-y-3"
@@ -66,7 +68,7 @@ export default function InputBox({
           {cta}
         </button>
       </div>
-        {error && <span className="text-red-500">{error}</span>}
+      {error && <span className="text-red-500">{error}</span>}
     </form>
   );
 }
