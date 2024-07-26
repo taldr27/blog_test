@@ -7,10 +7,10 @@ export default function AddNewPost({
   userPosts,
 }: Readonly<{ userPosts: PostWithProfile[] | null }>) {
   return (
-    <div className="w-full flex items-start gap-10 flex-col lg:flex-row min-h-[450px]">
-      <InputBox content="What do you want to write?" cta="Add New Post" />
-      <div>
-        <Separator title="Your last 4 posts" />
+    <div className="w-full flex items-start gap-20 flex-col min-h-[450px]">
+      <InputBox content="What do you want to write?" cta="Add New Post +" />
+      <div className="w-full">
+        <Separator title="Your latest posts" />
         <YourPosts filteredPosts={userPosts} />
       </div>
     </div>

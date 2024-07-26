@@ -21,35 +21,37 @@ export default function PostsBody({ post }: { post: PostWithProfile }) {
   return (
     <div
       key={post.id}
-      className="w-full max-w-[470px] min-h-[144px] cursor-pointer"
+      className="w-full min-h-[144px] cursor-pointer border border-1 rounded-2xl border-[#5E5E5E] p-6 flex flex-col justify-between hover:bg-[#0d0d0d] transition-all duration-500"
       onClick={handleSeeMore}
     >
-      <div className="flex flex-col lg:flex-row justify-normal lg:justify-between lg:items-center">
-        <span className="text-base text-[#848285]">{date}</span>
-        <div className="flex items-center gap-1">
-          <span>@{post.profile.user_name} </span>
-          <Image
-            src={post.profile.avatar_url ?? "/next.svg"}
-            alt="github avatar"
-            width={30}
-            height={30}
-            className="rounded-3xl"
-          />
+      <div>
+        <div className="flex flex-col lg:flex-row justify-normal lg:justify-between lg:items-center">
+          <span className="text-base text-[#848285]">{date}</span>
+        </div>
+        <div className="text-lg">
+          <span className="font-bold break-words">{post.title}</span>
+          <p className="text-[#848285]">
+            {contentToShow}
+            {isContentTooLong && (
+              <button
+                onClick={handleSeeMore}
+                className="text-[#F5F5F5] hover:underline"
+              >
+                See more
+              </button>
+            )}
+          </p>
         </div>
       </div>
-      <div className="text-lg">
-        <span className="font-bold">{post.title}</span>
-        <p className="text-[#848285]">
-          {contentToShow}
-          {isContentTooLong && (
-            <button
-              onClick={handleSeeMore}
-              className="text-[#F5F5F5] hover:underline"
-            >
-              See more
-            </button>
-          )}
-        </p>
+      <div className="flex items-center gap-2 mt-2">
+        <Image
+          src={post.profile.avatar_url ?? "/next.svg"}
+          alt="github avatar"
+          width={30}
+          height={30}
+          className="rounded-3xl"
+        />
+        <span>@{post.profile.user_name} </span>
       </div>
     </div>
   );

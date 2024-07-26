@@ -1,7 +1,7 @@
 import CommentsComponent from "@/app/components/CommentsComponent";
 import Separator from "@/app/components/Separator";
 import { Database } from "@/app/types/supabase";
-import { PostWithProfile } from "@/app/types/types";
+import { PostWithComments } from "@/app/types/types";
 import { DateConverter } from "@/app/utils/DateConverter";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
@@ -14,14 +14,12 @@ export default async function PostDetails({
 
   const { data: postData } = await supabase
     .from("posts")
-    .select("*, profile:profiles(*)")
+    .select("*, profile:profiles(*), comments:comments(*, profile:profiles(*))")
     .eq("id", params.postid)
     .single();
 
-  const post = postData as PostWithProfile;
+  const post = postData as PostWithComments;
   const postDate = DateConverter(post.created_at);
-
-  console.log(post);
 
   return (
     <div className="w-full max-w-[840px] px-8 flex flex-col mx-auto">
@@ -41,6 +39,7 @@ export default async function PostDetails({
                 className="rounded-3xl"
                 width={30}
                 height={30}
+                quality={50}
               />
             </a>
           </div>
@@ -50,14 +49,15 @@ export default async function PostDetails({
             src={post.image_url}
             alt="post image"
             className="max-h-[550px] mb-12"
-            width={840}
+            width={776}
             height={550}
+            quality={30}
             priority
           />
         )}
         <p className="text-lg leading-7">{post.content}</p>
       </div>
-      <CommentsComponent postId={post.id} />
+      <CommentsComponent postId={post.id} comments={post.comments} />
     </div>
   );
 }
