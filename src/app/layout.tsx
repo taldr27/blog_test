@@ -4,6 +4,7 @@ import { dm_sans } from "./fonts";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import Navbar from "./components/Navbar";
+import { Database } from "./types/supabase";
 
 export const metadata: Metadata = {
   title: "Blog Test",
@@ -15,7 +16,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const supabase = createServerComponentClient({ cookies });
+  const supabase = createServerComponentClient<Database>({ cookies });
   const {
     data: { user },
   } = await supabase.auth.getUser();

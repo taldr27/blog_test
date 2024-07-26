@@ -18,7 +18,6 @@ export default function AuthButton() {
     url = url.startsWith("http") ? url : `https://${url}`;
     url = url.endsWith("/") ? url : `${url}/`;
 
-    console.log("Redirect URL:", url);
     return url;
   };
 

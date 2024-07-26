@@ -2,8 +2,9 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { Post, PostWithProfile } from "../types/types";
 
-export default function PostsBody({ post }: any) {
+export default function PostsBody({ post }: { post: PostWithProfile }) {
   const router = useRouter();
   const date = new Date(post.created_at).toLocaleDateString("en-US", {
     year: "numeric",
@@ -22,8 +23,6 @@ export default function PostsBody({ post }: any) {
     router.push(`/posts/${post.id}`);
   };
 
-  console.log(post.profile);
-
   return (
     <div
       key={post.id}
@@ -33,9 +32,9 @@ export default function PostsBody({ post }: any) {
       <div className="flex flex-col lg:flex-row justify-normal lg:justify-between lg:items-center">
         <span className="text-base text-[#848285]">{date}</span>
         <div className="flex items-center gap-1">
-          <span>@{post.profile?.user_name} </span>
+          <span>@{post.profile.user_name} </span>
           <Image
-            src={post.profile.avatar_url}
+            src={post.profile.avatar_url ?? "/next.svg"}
             alt="github avatar"
             width={30}
             height={30}

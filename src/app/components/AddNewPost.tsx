@@ -1,10 +1,11 @@
+import { PostWithProfile } from "../types/types";
 import InputBox from "./InputBox";
 import Separator from "./Separator";
 import YourPosts from "./YourPosts";
 
 export default function AddNewPost({
   userPosts,
-}: Readonly<{ userPosts: any[] }>) {
+}: Readonly<{ userPosts: PostWithProfile[] | null }>) {
   return (
     <div className="w-full flex items-start gap-10 flex-col lg:flex-row">
       <InputBox content="What do you want to write?" cta="Add New Post" />

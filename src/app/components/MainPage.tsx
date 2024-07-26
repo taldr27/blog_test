@@ -1,8 +1,17 @@
 import PostsComponent from "./PostsComponent";
 import Separator from "./Separator";
 import AddNewPost from "./AddNewPost";
+import { Post, PostWithProfile } from "../types/types";
 
-export default function MainPage({ user, posts, userPosts }: any) {
+export default function MainPage({
+  user,
+  posts,
+  userPosts,
+}: Readonly<{
+  user: any;
+  posts: PostWithProfile[] | null;
+  userPosts: PostWithProfile[] | null;
+}>) {
   return (
     <div className="max-w-[1200px] w-full self-center">
       <Separator title="Available Posts" />
