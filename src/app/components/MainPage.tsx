@@ -10,7 +10,7 @@ export default async function MainPage({ user }: any) {
   const supabase = createServerComponentClient({ cookies });
   const { data: posts } = await supabase
     .from("posts")
-    .select("*")
+    .select("*, profile:profiles(*)")
     .order("created_at", { ascending: false });
 
   // TODO: I think I can filter posts to not repeat with the general posts section.
@@ -18,7 +18,7 @@ export default async function MainPage({ user }: any) {
   if (user) {
     const { data: userPostsData } = await supabase
       .from("posts")
-      .select("*")
+      .select("*, profile:profiles(*)")
       .eq("profile_id", user.id)
       .order("created_at", { ascending: false })
       .limit(4);

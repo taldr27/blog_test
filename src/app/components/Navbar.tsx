@@ -28,14 +28,14 @@ const Navbar = ({ user }: { user: User | null }) => {
         </li>
         {user ? (
           <>
-            <li className="hover:text-gray-300">
+            {/* <li className="hover:text-gray-300">
               <Link
                 className={`${pathname === "/#your-posts" ? "underline" : ""}`}
                 href="#your-posts"
               >
                 Your Posts
               </Link>
-            </li>
+            </li> */}
             <li>
               <button
                 className="cursor-pointer bg-red-500 rounded-3xl py-2 px-4 hover:bg-red-600"

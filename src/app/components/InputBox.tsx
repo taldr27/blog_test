@@ -16,7 +16,7 @@ export default function InputBox({
         Content:
       </label>
       <textarea
-        className="w-full bg-black text-white p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 placeholder:text-white"
+        className="w-full bg-black text-white p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 placeholder:text-gray-500"
         rows={7}
         placeholder={content}
       />
