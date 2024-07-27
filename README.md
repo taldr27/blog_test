@@ -1,6 +1,7 @@
 # Blog Application
 
 A blog application built with Next.js and Supabase. This application allows users to create and view blog posts, post comments in each post including images or just text. It utilizes Supabase for backend services including authentication with Github and database management. The app is designed to be user-friendly and responsive, leveraging modern technologies for both front-end and back-end services.
+At the beginning I tried to use the `@supabase/ssr` library to manage Supabase in the project but after some tries I decided to use the `@supabse/auth-helpers-nextjs` because it was better documented.
 
 ## Table of Contents
 

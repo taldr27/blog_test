@@ -14,9 +14,11 @@ export default function MainPage({
 }>) {
   return (
     <div className="max-w-[1200px] w-full self-center">
-      <Separator title="Last 9 posts" />
       {posts && posts.length > 0 ? (
-        <PostsComponent posts={posts} />
+        <>
+          <Separator title={`Last ${posts.length} posts`} />
+          <PostsComponent posts={posts} />
+        </>
       ) : (
         <p>No posts available yet...</p>
       )}
