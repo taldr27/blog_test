@@ -2,15 +2,11 @@ import { CommentWithProfile } from "../types/types";
 import CommentBody from "./CommentBody";
 import InputBox from "./InputBox";
 import Separator from "./Separator";
-import { cookies } from "next/headers";
 
 export default function CommentsComponent({
   postId,
   comments,
 }: Readonly<{ postId: string; comments: CommentWithProfile[] }>) {
-  const cookiesHeader = cookies();
-
-  // console.log(cookiesHeader)
   return (
     <>
       <div className="mb-12">

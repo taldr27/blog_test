@@ -25,9 +25,12 @@ const uploadImage = async (
 ) => {
   if (!imageFile) return "";
 
+  const timestamp = Date.now();
+  const fileName = `${timestamp}_${imageFile.name}`;
+
   const { data: uploadData, error: uploadError } = await supabase.storage
     .from("blog_images")
-    .upload(`${folder}/${userId}/${imageFile.name}`, imageFile);
+    .upload(`${folder}/${userId}/${fileName}`, imageFile);
 
   if (uploadError) {
     throw new Error(`Error uploading image: ${uploadError.message}`);
@@ -56,7 +59,7 @@ export const addPost = async (formData: FormData) => {
   const user = await authenticateUser();
 
   if (!content && !imageFile) {
-    throw new Error("Post must have content or an image");
+    return { success: false, error: "Post must have content or an image" };
   }
 
   const imageUrl = await uploadImage(user.id, imageFile, "posts");
@@ -68,6 +71,7 @@ export const addPost = async (formData: FormData) => {
     image_url: imageUrl,
   });
   revalidatePath("/");
+  return { success: true };
 };
 
 export const addComment = async (formData: FormData) => {
@@ -78,7 +82,7 @@ export const addComment = async (formData: FormData) => {
   const user = await authenticateUser();
 
   if (!content && !imageFile) {
-    throw new Error("Comment must have content or an image");
+    return { success: false, error: "Comment must have content or an image" };
   }
 
   const imageUrl = await uploadImage(user.id, imageFile, "comments");
@@ -91,4 +95,5 @@ export const addComment = async (formData: FormData) => {
   });
 
   revalidatePath(`/posts/${postId}`);
+  return { success: true };
 };
