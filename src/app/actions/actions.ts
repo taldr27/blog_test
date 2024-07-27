@@ -13,9 +13,10 @@ const authenticateUser = async () => {
 
   if (!user) {
     console.error("User not authenticated");
-    throw new Error("User not authenticated");
+    return { success: false, error: "User not authenticated" };
   }
-  return user;
+
+  return { success: true, user };
 };
 
 const uploadImage = async (
@@ -56,7 +57,15 @@ export const addPost = async (formData: FormData) => {
   const content = formData.get("content") as string;
   const imageFile = formData.get("image") as File | null;
 
-  const user = await authenticateUser();
+  const authResult = await authenticateUser();
+  if (!authResult.success) {
+    return authResult;
+  }
+  const user = authResult.user;
+
+  if (!user) {
+    return { success: false, error: "User not authenticated" };
+  }
 
   if (!content && !imageFile) {
     return { success: false, error: "Post must have content or an image" };
@@ -71,7 +80,7 @@ export const addPost = async (formData: FormData) => {
     image_url: imageUrl,
   });
   revalidatePath("/");
-  return { success: true };
+  return { success: true, error: null };
 };
 
 export const addComment = async (formData: FormData) => {
@@ -79,7 +88,15 @@ export const addComment = async (formData: FormData) => {
   const imageFile = formData.get("image") as File | null;
   const postId = formData.get("postId") as string;
 
-  const user = await authenticateUser();
+  const authResult = await authenticateUser();
+  if (!authResult.success) {
+    return authResult;
+  }
+  const user = authResult.user;
+
+  if (!user) {
+    return { success: false, error: "User not authenticated" };
+  }
 
   if (!content && !imageFile) {
     return { success: false, error: "Comment must have content or an image" };
@@ -95,5 +112,5 @@ export const addComment = async (formData: FormData) => {
   });
 
   revalidatePath(`/posts/${postId}`);
-  return { success: true };
+  return { success: true, error: null };
 };
