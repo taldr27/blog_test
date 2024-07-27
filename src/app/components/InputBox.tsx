@@ -1,18 +1,20 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { addPost } from "../actions/actions";
+import { addComment, addPost } from "../actions/actions";
 
 export default function InputBox({
   content,
   cta,
   isCommentBox = false,
   rows = 7,
+  postId
 }: Readonly<{
   content: string;
   cta: string;
   isCommentBox?: boolean;
   rows?: number;
+  postId?: string;
 }>) {
   const ref = useRef<HTMLFormElement>(null);
   const [image, setImage] = useState<File | null>(null);
@@ -29,20 +31,32 @@ export default function InputBox({
       ref={ref}
       action={async (formData: FormData) => {
         if (image) formData.append("image", image);
-        try {
-          await addPost(formData);
-          ref.current?.reset();
-          setImage(null);
-        } catch (error) {
-          setError((error as Error).message);
-          setTimeout(() => {
-            setError(null);
-          }, 3000);
+        if (isCommentBox) {
+          try {
+            formData.append("postId", postId as string);
+            await addComment(formData);
+            ref.current?.reset();
+            setImage(null);
+          } catch (error) {
+            setError((error as Error).message);
+            setTimeout(() => {
+              setError(null);
+            }, 3000);
+          }
+        } else {
+          try {
+            await addPost(formData);
+            ref.current?.reset();
+            setImage(null);
+          } catch (error) {
+            setError((error as Error).message);
+            setTimeout(() => {
+              setError(null);
+            }, 3000);
+          }
         }
       }}
-      className={`bg-[#1a1a1a] p-6 rounded-md  max-w-lg min-w-full ${
-        isCommentBox ? "min-w-full" : "mx-auto w-full min-h-[411px]"
-      }  flex flex-col space-y-3`}
+      className="bg-[#1a1a1a] p-6 rounded-md max-w-lg min-w-full mx-auto w-full min-h-[411px]flex flex-col space-y-3"
     >
       <div>
         {!isCommentBox ? (
@@ -53,6 +67,7 @@ export default function InputBox({
               name="title"
               type="text"
               className="w-full mb-5 bg-[#0d0d0d] text-white p-4 rounded-md focus:outline-none focus:ring-2 focus:ring-[#007aff]"
+              required
             />
             <label htmlFor="content">Content:</label>
             <textarea

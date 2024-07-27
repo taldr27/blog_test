@@ -25,7 +25,14 @@ const Navbar = ({ user }: { user: User | null }) => {
 
   return (
     <nav className="flex justify-between h-20 items-center mb-[72px] bg-[#222222] rounded-2xl px-4 md:px-12 mt-8 relative">
-      <Image src="/static/images/logo.png" alt="logo" width={140} height={48} />
+      <a href="/">
+        <Image
+          src="/static/images/logo.png"
+          alt="logo"
+          width={140}
+          height={48}
+        />
+      </a>
       <button className="md:hidden text-white text-2xl" onClick={toggleMenu}>
         {isOpen ? (
           <Image
@@ -54,14 +61,30 @@ const Navbar = ({ user }: { user: User | null }) => {
           </Link>
         </li>
         {user ? (
-          <li>
-            <button
-              className="cursor-pointer bg-[#007aff] rounded-3xl py-2 px-4 hover:bg-[#4294ec]"
-              onClick={handleSignOut}
-            >
-              Sign Out
-            </button>
-          </li>
+          <>
+            <li>
+              <button
+                className="cursor-pointer bg-red-500 rounded-3xl py-2 px-4 hover:bg-red-600"
+                onClick={handleSignOut}
+              >
+                Sign Out
+              </button>
+            </li>
+            <li>
+              <a
+                href={`https://github.com/${user.user_metadata.user_name}`}
+                target="_blank"
+              >
+                <Image
+                  src={user.user_metadata.avatar_url}
+                  alt="github icon"
+                  width={40}
+                  height={40}
+                  className="rounded-3xl cursor-pointer"
+                />
+              </a>
+            </li>
+          </>
         ) : (
           <li
             className={
