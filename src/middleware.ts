@@ -5,12 +5,16 @@ import type { NextRequest } from 'next/server'
 // import type { Database } from '@/lib/database.types'
 
 export async function middleware(req: NextRequest) {
-  console.log('Middleware is running');
   const res = NextResponse.next()
-
   const supabase = createMiddlewareClient({ req, res })
 
-  await supabase.auth.getSession()
+  const { data: { session } } = await supabase.auth.getSession()
+
+  const pathname = req.nextUrl.pathname
+
+  if (session && pathname === '/login') {
+    return NextResponse.redirect(new URL('/', req.url))
+  }
 
   return res
 }

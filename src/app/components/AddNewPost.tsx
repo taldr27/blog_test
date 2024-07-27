@@ -9,10 +9,12 @@ export default function AddNewPost({
   return (
     <div className="w-full flex items-start gap-20 flex-col min-h-[450px]">
       <InputBox content="What do you want to write?" cta="Add New Post +" />
-      <div className="w-full">
-        <Separator title="Your latest posts" />
-        <YourPosts filteredPosts={userPosts} />
-      </div>
+      {userPosts && userPosts.length > 0 ? (
+        <div className="w-full">
+          <Separator title="Your latest posts" />
+          <YourPosts filteredPosts={userPosts} />
+        </div>
+      ) : null}
     </div>
   );
 }

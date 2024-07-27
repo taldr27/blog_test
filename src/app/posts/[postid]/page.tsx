@@ -22,7 +22,7 @@ export default async function PostDetails({
   const postDate = DateConverter(post.created_at);
 
   return (
-    <div className="w-full max-w-[840px] px-8 flex flex-col mx-auto">
+    <div className="w-full max-w-[840px] px-8 flex flex-col mx-auto min-h-[calc(100vh-296px)]">
       <div className="flex flex-col justify-center mb-32">
         <Separator title={post.title} customFont="50" />
         <div className="flex justify-between items-center  mb-8">

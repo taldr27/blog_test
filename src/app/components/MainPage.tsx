@@ -15,7 +15,11 @@ export default function MainPage({
   return (
     <div className="max-w-[1200px] w-full self-center">
       <Separator title="Available Posts" />
-      <PostsComponent posts={posts} />
+      {posts && posts.length > 0 ? (
+        <PostsComponent posts={posts} />
+      ) : (
+        <p>No posts available yet...</p>
+      )}
       <div id="your-posts" className="mt-20">
         <Separator title="Your Posts" />
         {user ? (
