@@ -8,7 +8,7 @@ export default function InputBox({
   cta,
   isCommentBox = false,
   rows = 7,
-  postId
+  postId,
 }: Readonly<{
   content: string;
   cta: string;
@@ -19,6 +19,8 @@ export default function InputBox({
   const ref = useRef<HTMLFormElement>(null);
   const [image, setImage] = useState<File | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
@@ -26,37 +28,57 @@ export default function InputBox({
     }
   };
 
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (ref.current) {
+      const formData = new FormData(ref.current);
+      if (image) formData.append("image", image);
+      if (isCommentBox) {
+        try {
+          setLoading(true);
+          formData.append("postId", postId as string);
+          await addComment(formData);
+          setSuccess("Comment added successfully!");
+          ref.current.reset();
+          setImage(null);
+          setTimeout(() => {
+            setSuccess(null);
+          }, 3000);
+        } catch (error) {
+          setError((error as Error).message);
+          setTimeout(() => {
+            setError(null);
+          }, 3000);
+        } finally {
+          setLoading(false);
+        }
+      } else {
+        try {
+          setLoading(true);
+          await addPost(formData);
+          setSuccess("Post added successfully!");
+          ref.current.reset();
+          setImage(null);
+          setTimeout(() => {
+            setSuccess(null);
+          }, 3000);
+        } catch (error) {
+          setError((error as Error).message);
+          setTimeout(() => {
+            setError(null);
+          }, 3000);
+        } finally {
+          setLoading(false);
+        }
+      }
+    }
+  };
+
   return (
     <form
       ref={ref}
-      action={async (formData: FormData) => {
-        if (image) formData.append("image", image);
-        if (isCommentBox) {
-          try {
-            formData.append("postId", postId as string);
-            await addComment(formData);
-            ref.current?.reset();
-            setImage(null);
-          } catch (error) {
-            setError((error as Error).message);
-            setTimeout(() => {
-              setError(null);
-            }, 3000);
-          }
-        } else {
-          try {
-            await addPost(formData);
-            ref.current?.reset();
-            setImage(null);
-          } catch (error) {
-            setError((error as Error).message);
-            setTimeout(() => {
-              setError(null);
-            }, 3000);
-          }
-        }
-      }}
-      className="bg-[#1a1a1a] p-6 rounded-md max-w-lg min-w-full mx-auto w-full min-h-[411px]flex flex-col space-y-3"
+      onSubmit={handleSubmit}
+      className="bg-[#1a1a1a] p-6 rounded-md max-w-lg min-w-full mx-auto w-full flex flex-col space-y-3"
     >
       <div>
         {!isCommentBox ? (
@@ -96,10 +118,14 @@ export default function InputBox({
           accept="image/*"
           onChange={handleImageChange}
         />
-        <button className="cursor-pointer bg-[#007aff] rounded-3xl py-2 px-4 hover:bg-[#4294ec]">
-          {cta}
+        <button
+          type="submit"
+          className="cursor-pointer bg-[#007aff] rounded-3xl py-2 px-4 hover:bg-[#4294ec]"
+        >
+          {loading ? "Loading..." : cta}
         </button>
       </div>
+      {success && <span className="text-green-500">{success}</span>}
       {error && <span className="text-red-500">{error}</span>}
     </form>
   );

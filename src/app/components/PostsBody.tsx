@@ -2,10 +2,12 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { Post, PostWithProfile } from "../types/types";
+import { PostWithProfile } from "../types/types";
 import { DateConverter } from "../utils/DateConverter";
 
-export default function PostsBody({ post }: { post: PostWithProfile }) {
+export default function PostsBody({
+  post,
+}: Readonly<{ post: PostWithProfile }>) {
   const router = useRouter();
   const date = DateConverter(post.created_at);
 

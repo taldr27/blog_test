@@ -6,6 +6,7 @@ import { useState } from "react";
 
 export default function AuthButton() {
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
   const supabase = createClientComponentClient();
   const router = useRouter();
 
@@ -23,6 +24,7 @@ export default function AuthButton() {
 
   const handleSignInWithGitHub = async () => {
     try {
+      setLoading(true);
       await supabase.auth.signInWithOAuth({
         provider: "github",
         options: {
@@ -38,9 +40,9 @@ export default function AuthButton() {
   };
 
   return (
-    <div className="h-[calc(100vh-184px)] flex justify-center items-center">
+    <div className="h-full flex justify-center items-center">
       {error && <p className="text-red-500">{error}</p>}
-      <div className="h-96 w-96">
+      <div className="h-96 w-96 flex items-center">
         <div className="flex flex-col text-center items-center">
           <h1 className="font-bold text-5xl leading-[60px]">
             Welcome to Blogsphere
@@ -65,7 +67,7 @@ export default function AuthButton() {
                 clipRule="evenodd"
               />
             </svg>
-            Continue with Github
+            {loading ? "Loading..." : "Continue with GitHub"}
           </button>
         </div>
       </div>
