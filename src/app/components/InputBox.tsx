@@ -30,47 +30,38 @@ export default function InputBox({
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (ref.current) {
-      const formData = new FormData(ref.current);
-      if (image) formData.append("image", image);
-      if (isCommentBox) {
-        try {
-          setLoading(true);
-          formData.append("postId", postId as string);
-          await addComment(formData);
-          setSuccess("Comment added successfully!");
-          ref.current.reset();
-          setImage(null);
-          setTimeout(() => {
-            setSuccess(null);
-          }, 3000);
-        } catch (error) {
-          setError((error as Error).message);
-          setTimeout(() => {
-            setError(null);
-          }, 3000);
-        } finally {
-          setLoading(false);
-        }
+    if (!ref.current) return;
+
+    const formData = new FormData(ref.current);
+    if (image) formData.append("image", image);
+
+    if (isCommentBox) {
+      formData.append("postId", postId as string);
+    }
+
+    const typeOfCall = isCommentBox ? addComment : addPost;
+    const successMessage = isCommentBox
+      ? "Comment added successfully!"
+      : "Post added successfully!";
+
+    try {
+      setLoading(true);
+      const response = await typeOfCall(formData);
+      if (response.error) {
+        setError(response.error);
       } else {
-        try {
-          setLoading(true);
-          await addPost(formData);
-          setSuccess("Post added successfully!");
-          ref.current.reset();
-          setImage(null);
-          setTimeout(() => {
-            setSuccess(null);
-          }, 3000);
-        } catch (error) {
-          setError((error as Error).message);
-          setTimeout(() => {
-            setError(null);
-          }, 3000);
-        } finally {
-          setLoading(false);
-        }
+        setSuccess(successMessage);
+        ref.current.reset();
+        setImage(null);
       }
+    } catch (error) {
+      setError((error as Error).message);
+    } finally {
+      setTimeout(() => {
+        setError(null);
+        setSuccess(null);
+      }, 3000);
+      setLoading(false);
     }
   };
 
