@@ -2,7 +2,7 @@ import CommentsComponent from "@/app/components/CommentsComponent";
 import Separator from "@/app/components/Separator";
 import { Database } from "@/app/types/supabase";
 import { PostWithComments } from "@/app/types/types";
-import { DateConverter } from "@/app/utils/DateConverter";
+import DateConverter from "@/app/utils/DateConverter";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import Image from "next/image";

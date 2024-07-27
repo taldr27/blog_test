@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { PostWithProfile } from "../types/types";
-import { DateConverter } from "../utils/DateConverter";
+import DateConverter from "../utils/DateConverter";
 
 export default function PostsBody({
   post,

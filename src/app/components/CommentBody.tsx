@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { DateConverter } from "../utils/DateConverter";
+import DateConverter from "../utils/DateConverter";
 
 export default function CommentBody({
   name,
