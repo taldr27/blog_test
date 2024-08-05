@@ -21,10 +21,13 @@ export default function InputBox({
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
+  const [fileName, setFileName] = useState<string>("Choose an Image");
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
-      setImage(event.target.files[0]);
+      const file = event.target.files[0];
+      setImage(file);
+      setFileName(file ? file.name : "Choose an Image");
     }
   };
 
@@ -102,13 +105,21 @@ export default function InputBox({
         )}
       </div>
       <div className="flex justify-between items-center flex-wrap gap-5 md:gap-0">
-        <input
-          type="file"
-          id="file-input"
-          className="max-w-80"
-          accept="image/*"
-          onChange={handleImageChange}
-        />
+        <label
+          htmlFor="file-input"
+          className="flex items-center gap-2 max-w-full md:max-w-[30%]"
+        >
+          <input
+            type="file"
+            id="file-input"
+            className="hidden"
+            accept="image/*"
+            onChange={handleImageChange}
+          />
+          <span className="bg-white text-gray-700 py-2 px-4 rounded-md cursor-pointer overflow-hidden text-ellipsis hover:bg-gray-200">
+            {fileName}
+          </span>
+        </label>
         <button
           type="submit"
           className="cursor-pointer bg-[#007aff] rounded-3xl py-2 px-4 hover:bg-[#4294ec]"

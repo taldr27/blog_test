@@ -55,7 +55,7 @@ export default async function PostDetails({
             priority
           />
         )}
-        <p className="text-lg leading-7">{post.content}</p>
+        <p className="text-lg leading-7 whitespace-pre-wrap">{post.content}</p>
       </div>
       <CommentsComponent postId={post.id} comments={post.comments} />
     </div>
